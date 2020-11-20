@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="pragma" content="no-cache" />
+<meta http-equiv="expires" content="-1" />
+<meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0;"/>
+<link rel="stylesheet" href="./css/bootstrap.min.css">
+<link rel="stylesheet" href="./css/style.css">
+<title>Génie Wifi > login</title>
+</head>
+
+<body>
+<!-- debut personnalisation -->
+<div class="container">
+	<div class="row">
+		<div class="col main">
+			<div class="text-center">
+				<img src="./img/logobottom.png" alt="logo">
+			</div>
+			<div class="card">
+				<div class="card-header">
+					<h2 class="text-center"> Pur Génie Wifi </h2>
+				</div>
+				<div class="card-body">
+
+
+					<div class="alert alert-secondary text-center" role="alert">
+						Veuillez vous identifier pour profiter de l'internet
+						$(if trial == 'yes')
+						<br>
+							Il y a posibiliter de tester , <a style="color: #FF8080"href="$(link-login-only)?dst=$(link-orig-esc)&amp;username=T-$(mac-esc)">cliquez ici </a>.
+						$(endif)
+					</div>
+					$(if error)
+					<div class="alert alert-danger" role="alert">$(error)</div>
+					$(endif)
+					<div>
+						<form name="login" action="$(link-login-only)" method="post"
+							$(if chap-id) onSubmit="return doLogin()" $(endif)>
+							<input type="hidden" name="dst" value="$(link-orig)" />
+							<input type="hidden" name="popup" value="true" />
+		
+							<div class="form-group">
+								<label for="loginInput">Login</label>
+								<input name="username" type="text" value="$(username)" class="form-control" id="loginInput" required>
+							</div>
+							<div class="form-group">
+								<label for="passwordInput">Mot de passe </label>
+								<input  name="password" type="password" class="form-control" id="passwordInput" required>
+							</div>
+		
+							<div class="form-group">
+								<button type="submit" class="btn btn-lg btn-block btn-primary mb-2">Connexion</button>
+							</div>
+						</form>
+					</div>
+
+				  
+				</div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+<!-- fin personnalisation -->
+
+$(if chap-id)
+	<form name="sendin" action="$(link-login-only)" method="post">
+		<input type="hidden" name="username" />
+		<input type="hidden" name="password" />
+		<input type="hidden" name="dst" value="$(link-orig)" />
+		<input type="hidden" name="popup" value="true" />
+	</form>
+	
+	<script type="text/javascript" src="/md5.js"></script>
+	<script type="text/javascript">
+	<!--
+	    function doLogin() {
+		document.sendin.username.value = document.login.username.value;
+		document.sendin.password.value = hexMD5('$(chap-id)' + document.login.password.value + '$(chap-challenge)');
+		document.sendin.submit();
+		return false;
+	    }
+	//-->
+	</script>
+$(endif)
+
+<script type="text/javascript">
+<!--
+  document.login.username.focus();
+//-->
+</script>
+</body>
+</html>
